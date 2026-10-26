@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyLearn — Learn Python Programming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--  REGISTRATION PAGE  -->
+<section id="registration-page" class="reg-page">
+  <div class="reg-card">
+    <div class="reg-brand">
+      <span class="reg-brand__prompt">&gt;&gt;&gt;</span>
+      <span class="reg-brand__name">PyLearn</span>
+    </div>
+    <h1 class="reg-title">Learn Python, one lesson at a time</h1>
+    <p class="reg-subtitle">Tell us a little about you to set up your learning space.</p>
+
+    <form id="registration-form" class="reg-form" novalidate>
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Enwere Charles" autocomplete="name" required>
+        <span class="field-error" id="error-fullName"></span>
+      </div>
+
+      <div class="field">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" placeholder="20" min="5" max="120" required>
+        <span class="field-error" id="error-age"></span>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--block">
+        Start learning <i class="arrow">→</i>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!--  MAIN APPLICATION -->
+<div id="app" class="app hidden">
+
+  <!-- Mobile top bar -->
+  <header class="topbar">
+    <button id="menuToggle" class="icon-btn" aria-label="Toggle menu">
+      <span class="hamburger"></span>
+    </button>
+    <div class="topbar__brand"><span class="prompt">&gt;&gt;&gt;</span> PyLearn</div>
+    <div class="topbar__spacer"></div>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <span class="prompt">&gt;&gt;&gt;</span>
+        <span>PyLearn</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <button class="nav-link active" data-view="dashboard">
+          <span class="nav-link__icon">◧</span> Dashboard
+        </button>
+        <button class="nav-link" data-view="lessons">
+          <span class="nav-link__icon">▤</span> Lessons
+        </button>
+        <button class="nav-link" data-view="playground">⌘ Code Playground</button>
+        <button class="nav-link" data-view="achievements">🏆 Achievements</button>
+        <button class="nav-link" data-view="progress">
+          <span class="nav-link__icon">◔</span> My Progress
+        </button>
+      </nav>
+
+      <div class="sidebar__user">
+        <div class="user-chip">
+          <div class="user-chip__avatar" id="sidebarAvatar">?</div>
+          <div class="user-chip__info">
+            <div class="user-chip__name" id="sidebarUserName">—</div>
+            <div class="user-chip__label">Student</div>
+          </div>
+        </div>
+        <button id="deleteAccountBtn" class="btn btn--danger-ghost btn--block">
+          Delete account
+        </button>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- DASHBOARD VIEW -->
+      <section id="view-dashboard" class="view">
+        <div class="view-header">
+          <div>
+            <h1 id="welcomeMessage">Welcome back!</h1>
+            <p class="view-subtitle">Here's where you left off with Python.</p>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-card__label">Lessons completed</div>
+            <div class="stat-card__value" id="statCompleted">0</div>
+            <div class="stat-card__sub">of 10 total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">Lessons remaining</div>
+            <div class="stat-card__value" id="statRemaining">10</div>
+            <div class="stat-card__sub">keep going</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">Overall progress</div>
+            <div class="stat-card__value" id="statPercent">0%</div>
+            <div class="stat-card__sub">course completion</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__label">Average quiz score</div>
+            <div class="stat-card__value" id="statAvgQuiz">—</div>
+            <div class="stat-card__sub" id="statQuizTaken">0 quizzes taken</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__header">
+            <h2>Course progress</h2>
+            <span id="progressBarLabel">0% complete</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__fill" id="dashboardProgressFill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="panel terminal-panel">
+          <div class="terminal">
+            <div class="terminal__bar">
+              <span class="dot dot--red"></span><span class="dot dot--amber"></span><span class="dot dot--green"></span>
+              <span class="terminal__title">progress_tracker.py</span>
+            </div>
+            <div class="terminal__body">
+              <div class="terminal__line"><span class="t-prompt">&gt;&gt;&gt;</span> student.name</div>
+              <div class="terminal__line t-output" id="terminalName">'—'</div>
+              <div class="terminal__line"><span class="t-prompt">&gt;&gt;&gt;</span> student.progress()</div>
+              <div class="terminal__line t-output" id="terminalProgress">0% complete<span class="cursor">▌</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__header">
+            <h2>Continue learning</h2>
+          </div>
+          <div id="continueLearningCard" class="continue-card">
+            <!-- injected by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- LESSONS LIST VIEW -->
+      <section id="view-lessons" class="view hidden">
+        <div class="view-header">
+          <div>
+            <h1>Lessons</h1>
+            <p class="view-subtitle">10 modules covering core Python programming.</p>
+          </div>
+        </div>
+        <div class="lesson-grid" id="lessonGrid">
+          <!-- injected by JS -->
+        </div>
+      </section>
+
+      <!-- SINGLE LESSON VIEW -->
+      <section id="view-lesson-detail" class="view hidden">
+        <button class="back-link" id="backToLessons">← Back to lessons</button>
+        <div id="lessonDetailContent">
+          <!-- injected by JS -->
+        </div>
+      </section>
+
+      <!-- QUIZ VIEW -->
+      <section id="view-quiz" class="view hidden">
+        <button class="back-link" id="backToLessonFromQuiz">← Back to lesson</button>
+        <div id="quizContent">
+          <!-- injected by JS -->
+        </div>
+      </section>
+
+      <section id="view-playground" class="view hidden">
+        <div class="view-header"><div><h1>Python playground</h1><p class="view-subtitle">Write Python and run it right in your browser. Your code stays on this device.</p></div></div>
+        <div class="panel playground-panel">
+          <label for="pythonCode"><strong>Code editor</strong></label>
+          <textarea id="pythonCode" spellcheck="false" rows="12" style="width:100%;font-family:monospace;background:#111827;color:#e5e7eb;padding:16px;border-radius:10px;margin:12px 0">name = "Amaka"
+for number in range(1, 4):
+    print(f"Hello, {name}! Count: {number}")</textarea>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn--primary" id="runPythonBtn">▶ Run code</button><button class="btn btn--ghost" id="clearOutputBtn">Clear output</button></div>
+          <pre id="pythonOutput" aria-live="polite" style="white-space:pre-wrap;background:#0b1220;color:#b8f7c5;padding:16px;border-radius:10px;min-height:90px;margin-top:14px">Ready. Click Run code to start Python.</pre>
+          <p class="view-subtitle" id="pythonRuntimeNote">Python runtime loads from Pyodide on first run; an internet connection is required.</p>
+        </div>
+      </section>
+      <section id="view-achievements" class="view hidden">
+        <div class="view-header"><div><h1>Achievements</h1><p class="view-subtitle">Milestones earned as you learn Python.</p></div></div>
+        <div id="achievementGrid" class="lesson-grid"></div>
+      </section>
+
+      <!--  PROGRESS VIEW  -->
+      <section id="view-progress" class="view hidden">
+        <div class="view-header">
+          <div>
+            <h1>My progress</h1>
+            <p class="view-subtitle">A breakdown of every lesson and quiz.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="progress-bar progress-bar--lg">
+            <div class="progress-bar__fill" id="progressPageFill" style="width:0%"></div>
+          </div>
+          <p class="progress-page-label" id="progressPageLabel">0% of the course complete</p>
+        </div>
+        <div class="table-wrap">
+          <table class="progress-table" id="progressTable">
+            <thead>
+              <tr>
+                <th>Lesson</th>
+                <th>Status</th>
+                <th>Quiz score</th>
+              </tr>
+            </thead>
+            <tbody id="progressTableBody">
+              <!-- injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!--  DELETE ACCOUNT MODAL  -->
+<div id="deleteModal" class="modal-overlay hidden">
+  <div class="modal">
+    <h2>Delete your account?</h2>
+    <p>Deleting your account will permanently remove your profile information, completed lessons, quiz scores, and learning progress. This action cannot be undone.</p>
+    <div class="modal__actions">
+      <button id="cancelDeleteBtn" class="btn btn--ghost">Cancel</button>
+      <button id="confirmDeleteBtn" class="btn btn--danger">Delete account</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST  -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
